@@ -127,6 +127,16 @@ const PermintaanForm: React.FC<{
                 <Input.TextArea disabled={type == "add" ? false : true} />
             </Form.Item>
 
+            <Form.Item {...formItemLayout} label="Nama Admin" name="status">
+                <Select
+                    style={{ display: type == "add" ? "none" : "block" }}
+                    options={[
+                        { label: "Open", value: "Open" },
+                        { label: "Close", value: "Close" },
+                    ]}
+                    optionFilterProp="label"
+                />
+            </Form.Item>
             <Form.Item
                 {...formItemLayout}
                 label="Status Permintaan"
