@@ -45,6 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/master-barang', [MasterBarangController::class, 'store'])->name('master_barang.store');
     Route::delete('/admin/master-barang', [MasterBarangController::class, 'destroy'])->name('master_barang.destroy');
 
+    route::get('/api/barang1', function () {
+        $barangList = MasterBarang::doesntHave('kelolaBarang')->selectRaw('concat(jenis, " | ", merk, " | ", tipe, " | ", nomor_urut_pendaftaran) as nama_barang, id')->get();
+        return response()->json($barangList);
+    })->name('barang.get');
+
+
+
     //route master jabatan
     route::get('/admin/master-jabatan', function () {
         return Inertia::render('Admin/MasterJabatan', ['master_jabatan' => MasterJabatan::all()]);
@@ -72,6 +79,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/barang', [BarangController::class, 'update'])->name('admin.kelola.history_barang.update');
     Route::post('/admin/barang', [BarangController::class, 'store'])->name('admin.kelola.history_barang.store');
     Route::delete('/admin/barang', [BarangController::class, 'destroy'])->name('admin.kelola.history_barang.destroy');
+
+
 
 
 
@@ -217,7 +226,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/permintaan', [PermintaanController::class, 'index'])->name('permintaan');
     Route::post('/permintaan', [PermintaanController::class, 'store'])->name('permintaan.store');
+    Route::patch('/permintaan', [PermintaanController::class, 'update'])->name('permintaan.update');
     Route::delete('/permintaan/{id}', [PermintaanController::class, 'destroy'])->name('permintaan.destroy');
+
+    // Get All role admin
+    Route::get('/user/role', function () {
+        $user = User::where('role', 'admin')->get();
+        return response()->json($user);
+    })->name('user.role');
 
     Route::get('/pesan', [MessageController::class, 'index'])->name('pesan');
     Route::get('/pesan/{percakapanId}', [MessageController::class, 'percakapan'])->name('pesan.percakapan');

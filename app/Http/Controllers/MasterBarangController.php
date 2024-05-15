@@ -102,8 +102,6 @@ class MasterBarangController extends Controller
 
 
         try {
-
-            dd($request->all());
             $validatedData = $request->validate($request->rules());
             $validatedData['tahun_peroleh'] = Carbon::parse($validatedData['tahun_peroleh'])->format('Y-m-d H:i:s');
 

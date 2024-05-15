@@ -23,6 +23,11 @@ class StoreMasterRuanganRequest extends FormRequest
     {
         return [
             'nama' => 'required',
+            "users_id" => "required",
+            "kode_siman" => "required",
+            "kode_baru" => "required",
+            "gedung" => "required",
+            "lantai" => "required"
         ];
     }
 }

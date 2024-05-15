@@ -28,8 +28,9 @@ let indexMerk = 0;
 let indexTipe = 0;
 const HistoryBarangForm: React.FC<{
     form: any;
+    type: string;
     onFinish: (values: any) => void;
-}> = ({ form, onFinish }) => {
+}> = ({ form, onFinish, type }) => {
     const [penggunaName, setPenggunaName] = useState("");
     const [penggunaItems, setPenggunaItems] = useState<string[]>([]);
     const [jenisItems, setJenisItems] = useState<string[]>([]);
@@ -39,6 +40,9 @@ const HistoryBarangForm: React.FC<{
 
     const [lokasiItems, setLokasiItems] = useState<string[]>([]);
     const [osItems, setOsItems] = useState<string[]>([]);
+    const [barangItems, setBarangItems] = useState<string[]>([]);
+
+    console.log(barangItems);
 
     const inputRef = useRef<InputRef>(null);
 
@@ -52,9 +56,6 @@ const HistoryBarangForm: React.FC<{
     };
     useEffect(() => {
         setKondisiValue(form.getFieldValue("kondisi"));
-        console.log("====================================");
-        console.log("change happen");
-        console.log("====================================");
     }, [form, form.getFieldValue("kondisi")]);
 
     useEffect(() => {
@@ -64,8 +65,16 @@ const HistoryBarangForm: React.FC<{
                 const penggunaResponse = await axios.get(route("users.get"));
                 const lokasiResponse = await axios.get(route("lokasi.get"));
                 const osResponse = await axios.get(route("os.get"));
+                const barangResponse = await axios.get(route("barang.get"));
 
-                // console.log({ arr: response.data[0] });
+                // console.log(barangResponse.data, "barangResponse");
+                // console.log(osResponse.data, "osResponse");
+
+                let barangDB = barangResponse.data.map((item: any) => ({
+                    id: item.id,
+                    nama_barang: item.nama_barang,
+                }));
+                setBarangItems(barangDB);
                 let penggunaItemsDB = penggunaResponse.data[0].map(
                     (item: any) => ({
                         id: item.id,
@@ -94,6 +103,10 @@ const HistoryBarangForm: React.FC<{
             // console.log({ jenisItems });
         };
         fetchData();
+    }, []);
+
+    useEffect(() => {
+        console.log("Ok");
     }, []);
 
     const addJenisItem = (
@@ -206,12 +219,7 @@ const HistoryBarangForm: React.FC<{
                 {...formItemLayout}
                 label="Jenis"
                 name="jenis"
-                // rules={[
-                //     {
-                //         required: true,
-                //         message: "Isian Jenis harus diisi",
-                //     },
-                // ]}
+                style={{ display: type == "add" ? "none" : "" }}
             >
                 <Input disabled style={disabledStyle} />
             </Form.Item>
@@ -219,12 +227,7 @@ const HistoryBarangForm: React.FC<{
                 {...formItemLayout}
                 label="merk"
                 name="merk"
-                // rules={[
-                //     {
-                //         required: true,
-                //         message: "Isian Jenis harus diisi",
-                //     },
-                // ]}
+                style={{ display: type == "add" ? "none" : "" }}
             >
                 <Input disabled style={disabledStyle} />
             </Form.Item>
@@ -232,26 +235,42 @@ const HistoryBarangForm: React.FC<{
                 {...formItemLayout}
                 label="tipe"
                 name="tipe"
-                // rules={[
-                //     {
-                //         required: true,
-                //         message: "Isian Jenis harus diisi",
-                //     },
-                // ]}
-                style={disabledStyle}
+                style={{ display: type == "add" ? "none" : "" }}
             >
                 <Input disabled style={disabledStyle} />
             </Form.Item>
 
             <Form.Item
                 {...formItemLayout}
-                label="Tanggal Peroleh"
-                name="tanggal_peroleh"
+                label="Tahun Peroleh"
+                name="tahun_peroleh"
+                style={{ display: type == "add" ? "none" : "" }}
             >
                 <DatePicker disabled style={disabledStyle} />
             </Form.Item>
-            <Form.Item {...formItemLayout} label="Nomor Seri" name="nomor_seri">
+            <Form.Item
+                {...formItemLayout}
+                label="Nomor Seri"
+                name="nomor_seri"
+                style={{ display: type == "add" ? "none" : "" }}
+            >
                 <Input disabled style={disabledStyle} />
+            </Form.Item>
+            <Form.Item
+                {...formItemLayout}
+                label="Nama Barang"
+                name="barang_id"
+                style={{ display: type == "edit" ? "none" : "" }}
+            >
+                <Select
+                    showSearch
+                    onSearch={(value) => {}}
+                    optionFilterProp="label"
+                    options={barangItems.map((item: any) => ({
+                        label: item.nama_barang,
+                        value: item.id,
+                    }))}
+                />
             </Form.Item>
         </Form>
     );

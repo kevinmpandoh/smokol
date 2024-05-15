@@ -290,17 +290,14 @@ const User = ({ users }: PageProps & { users: User[] }) => {
             dataIndex: "id",
         },
         {
-            title: "nama_lengkap",
+            title: "Nama Lengkap",
             dataIndex: "nama_lengkap",
         },
-        { title: "email", dataIndex: "email" },
-        { title: "bidang", dataIndex: "bidang" },
-        { title: "jabatan", dataIndex: "jabatan" },
-        { title: "role", dataIndex: "role" },
-        { title: "username", dataIndex: "username" },
-        { title: "foto", dataIndex: "foto" },
-        { title: "password_hash", dataIndex: "password_hash" },
-
+        { title: "Email", dataIndex: "email" },
+        { title: "Bidang", dataIndex: "bidang" },
+        { title: "Jabatan", dataIndex: "jabatan" },
+        { title: "Role", dataIndex: "role" },
+        { title: "Username", dataIndex: "username" },
         {
             title: "edit",
             render: (_, record) => (

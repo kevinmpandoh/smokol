@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Percakapan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Permintaan;
@@ -18,36 +19,40 @@ class PermintaanController extends Controller
     {
         $user = Auth::user();
 
+
+
+
         if ($user->role == 'super admin') {
-            $permintaan = Permintaan::join('users', 'users.id', 'permintaans.user_id')
-                ->join("master_ruangan", "master_ruangan.id", "permintaans.ruangan_id")
-                ->select('permintaans.*',  'users.nama_lengkap as users_nama', 'users.id as users_id', 'master_ruangan.nama as nama_ruangan')
+            $permintaan = Permintaan::join('users', 'users.id', 'permintaan.user_id')
+                ->join("master_ruangan", "master_ruangan.id", "permintaan.ruangan_id")
+                ->join('percakapan', 'permintaan.id', '=', 'percakapan.permintaan_id')
+                ->join('users as u2', 'u2.id', '=', 'percakapan.user2_id')
+                ->select('permintaan.*',  'users.nama_lengkap as users_nama', 'master_ruangan.nama as nama_ruangan', 'percakapan.user2_id', 'u2.nama_lengkap as user2_nama')
                 ->get();
         } else if ($user->role == 'admin') {
-            $permintaan = Permintaan::join('users', 'users.id', 'permintaans.user_id')
-                ->join("master_ruangan", "master_ruangan.id", "permintaans.ruangan_id")
-                ->join("percakapans", "percakapans.permintaan_id", "permintaans.id")
-                ->select('permintaans.*',  'users.nama_lengkap as users_nama', 'users.id as users_id', 'master_ruangan.nama as nama_ruangan')
-                ->where('percakapans.user2_id', $user->id)
+            $permintaan = Permintaan::join('users', 'users.id', 'permintaan.user_id')
+                ->join("master_ruangan", "master_ruangan.id", "permintaan.ruangan_id")
+                ->join("percakapan", "percakapan.permintaan_id", "permintaan.id")
+                ->join('users as u2', 'u2.id', '=', 'percakapan.user2_id')
+                ->select('permintaan.*',  'users.nama_lengkap as users_nama', 'master_ruangan.nama as nama_ruangan', 'percakapan.user2_id', 'u2.nama_lengkap as user2_nama')
+                ->where('percakapan.user2_id', $user->id)
                 ->get();
         } else {
-            $permintaan = Permintaan::select('permintaans.*',  'users.nama_lengkap as users_nama', 'master_ruangan.nama as nama_ruangan')
-                ->join('users', 'users.id', 'permintaans.user_id')
-                ->join("master_ruangan", "master_ruangan.id", "permintaans.ruangan_id")
-                ->join("percakapans", "percakapans.permintaan_id", "permintaans.id")
-                ->where('permintaans.user_id', $user->id)
+
+            $permintaan = Permintaan::select('permintaan.*',  'users.nama_lengkap as users_nama', 'master_ruangan.nama as nama_ruangan')
+                ->join('users', 'users.id', 'permintaan.user_id')
+                ->join("master_ruangan", "master_ruangan.id", "permintaan.ruangan_id")
+                // ->join("percakapans", "percakapans.permintaan_id", "permintaans.id")
+                ->where('permintaan.user_id', '=', $user->id)
+                ->where("permintaan.status", "=", "open")
                 ->get();
         }
 
-        $messages = Permintaan::select('messages.konten', 'messages.user_id', 'messages.created_at', 'users.nama_lengkap as nama_lengkap')
-            ->join('percakapans', 'permintaans.id', '=', 'percakapans.permintaan_id')
-            ->join('messages', 'percakapans.id', '=', 'messages.percakapan_id')
-            ->join('users', 'users.id', '=', 'messages.user_id')
-            ->get();
+
+        // return response()->json($permintaan);
 
         return Inertia::render('Permintaan', [
             'permintaan' => $permintaan,
-            'messages' => $messages
         ]);
     }
 
@@ -81,16 +86,23 @@ class PermintaanController extends Controller
             $validatedData['no_ticket'] = 'TICKET-' . date('YmdHis'); // TICKET-[YYYYMMDDHHIISS            
             $validatedData['user_id'] = Auth::id();
 
-
-
-
             $response = [
                 'message' => 'Data berhasil ditambahkan',
             ];
 
 
 
-            Permintaan::create($validatedData);
+            $permintaan = Permintaan::create($validatedData);
+
+            $percakapan = new Percakapan();
+            $percakapan->user1_id = Auth::id();
+            $percakapan->user2_id = 1;
+            $percakapan->permintaan_id = $permintaan->id;
+            $percakapan->save();
+
+
+
+
             $permintaan = Permintaan::all();
         } catch (QueryException $e) {
             $response = [
@@ -140,9 +152,40 @@ class PermintaanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        try {
+
+            $validatedData = $request->validate([
+                'nama_permintaan' => 'required',
+                'kategori' => 'required',
+                'sub_kategori' => 'required',
+                'ruangan_id' => 'required',
+                'no_telp' => 'required',
+                'nama_item' => 'required',
+                'deskripsi' => 'required',
+                "status" => "required",
+            ]);
+
+
+
+            $permintaan = Permintaan::findOrFail($request->id);
+            $permintaan->update($validatedData);
+            $permintaan->save();
+
+            $percakapan = Percakapan::where('permintaan_id', $request->id)->first();
+            // Update percakapan user2_id
+            $percakapan->user2_id = $request->user2_id;
+            $percakapan->save();
+
+
+            return response()->json(
+                ['message' => 'data berhasil disimpan'],
+                200
+            );
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

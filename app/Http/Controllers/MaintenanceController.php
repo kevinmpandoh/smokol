@@ -32,6 +32,8 @@ class MaintenanceController extends Controller
     {
         $user = auth()->user();
 
+        // dd($user->id);
+
         // return Inertia::render('Barang', ['history_barang' => DB::table('barang_view')->where('pengguna_id', $user->id)->get()]);
 
         $maintenance_list = MaintenanceSequence::select(
@@ -55,9 +57,12 @@ class MaintenanceController extends Controller
             })
             ->join('master_barang', 'maintenance_sequences.barang_id', '=', 'master_barang.id')
             ->join('status_pemeliharaan', 'status_pemeliharaan.kode_status', '=', 'maintenances.kode_status')
-            ->where('maintenance_sequences.users_id', $user->id)
+            ->where('maintenance_sequences.users_id', '=', $user->id)
             ->get();
+
+
         // $maintenance_list = DB::table('maintenances')->where('users_id', $user->id);
+        // dd($maintenance_list);
         return Inertia::render('Maintenance', ['maintenance_list' => $maintenance_list]);
     }
 
@@ -132,7 +137,7 @@ class MaintenanceController extends Controller
                 $validatedData['problem_img_path'] = null;
             }
 
-            // insert
+            // insert        
             $newSequences = MaintenanceSequence::create($validatedData);
             $newMaintenance = Maintenance::create(['sequence_id' => $newSequences->id, 'kode_status' => '0', 'users_id' => $user->id]);
 

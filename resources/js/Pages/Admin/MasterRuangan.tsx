@@ -319,23 +319,23 @@ const MasterRuangan = ({
             // sorter: namaSorter as CompareFn<object>,
         },
         {
-            title: "nama",
+            title: "Nama Ruangan",
             dataIndex: "nama",
         },
         {
-            title: "kode_siman",
+            title: "Kode Siman",
             dataIndex: "kode_siman",
         },
         {
-            title: "kode_baru",
+            title: "Kode Baru",
             dataIndex: "kode_baru",
         },
         {
-            title: "gedung",
+            title: "Gedung",
             dataIndex: "gedung",
         },
         {
-            title: "lantai",
+            title: "Lantai",
             dataIndex: "lantai",
         },
         // {
@@ -345,53 +345,54 @@ const MasterRuangan = ({
         //     // sorter: namaSorter as CompareFn<object>,
         // },
         {
-            title: "Nama penanggungjawab ruangan",
+            title: "Nama penanggung jawab ruangan",
             dataIndex: "users_nama",
 
             // sorter: namaSorter as CompareFn<object>,
         },
         {
-            title: "edit",
+            title: "Aksi",
             render: (_, record) => (
-                <Button
-                    onClick={() => {
-                        setOpenModalUbah(true);
+                <>
+                    <Button
+                        onClick={() => {
+                            setOpenModalUbah(true);
 
-                        itemEditForm.setFieldsValue(record);
-                        itemEditForm.setFieldValue("id", record.key);
-                        itemEditForm.setFieldValue("users_id", record.users_id);
-                        itemEditForm.setFieldValue(
-                            "kode_siman",
-                            record.kode_siman
-                        );
-                        itemEditForm.setFieldValue(
-                            "kode_baru",
-                            record.kode_baru
-                        );
-                        itemEditForm.setFieldValue("gedung", record.gedung);
-                        itemEditForm.setFieldValue("lantai", record.lantai);
-                    }}
-                >
-                    <EditOutlined />
-                    edit
-                </Button>
-            ),
-        },
-        {
-            title: "delete",
-            render: (_: any, record: any) => (
-                <Button>
-                    <Popconfirm
-                        title="Hapus dari master"
-                        description="Apakah anda yakin akan menghapus ini ? "
-                        onConfirm={() => handleDelete(record.key ?? 0)}
-                        onCancel={() => console.log("Cancel")}
-                        okText="Ya"
-                        cancelText="Batalkan"
+                            itemEditForm.setFieldsValue(record);
+                            itemEditForm.setFieldValue("id", record.key);
+                            itemEditForm.setFieldValue(
+                                "users_id",
+                                record.users_id
+                            );
+                            itemEditForm.setFieldValue(
+                                "kode_siman",
+                                record.kode_siman
+                            );
+                            itemEditForm.setFieldValue(
+                                "kode_baru",
+                                record.kode_baru
+                            );
+                            itemEditForm.setFieldValue("gedung", record.gedung);
+                            itemEditForm.setFieldValue("lantai", record.lantai);
+                        }}
                     >
-                        <DeleteOutlined /> Hapus
-                    </Popconfirm>
-                </Button>
+                        <EditOutlined />
+                        edit
+                    </Button>
+
+                    <Button>
+                        <Popconfirm
+                            title="Hapus dari master"
+                            description="Apakah anda yakin akan menghapus ini ? "
+                            onConfirm={() => handleDelete(record.key ?? 0)}
+                            onCancel={() => console.log("Cancel")}
+                            okText="Ya"
+                            cancelText="Batalkan"
+                        >
+                            <DeleteOutlined /> Hapus
+                        </Popconfirm>
+                    </Button>
+                </>
             ),
         },
     ];
@@ -469,7 +470,7 @@ MasterRuangan.layout = (
     <AuthenticatedLayout
         user={page.props.auth.user}
         header={<h2 className="">Master Ruangan</h2>}
-        selectedKey="admin.master.Ruangan"
+        selectedKey="admin.master.ruangan"
         children={page}
     ></AuthenticatedLayout>
 );

@@ -127,6 +127,8 @@ const BarangPage = ({
     };
 
     const [dataSource, setDataSource] = useState<Barang[]>([]);
+
+    console.log("DATA", dataSource);
     // data for current barang bast
     const [dataBast, setDataBast] = useState<BastType[]>([]);
 
@@ -533,7 +535,7 @@ const BarangPage = ({
                             }
                             pengajuanForm.setFieldValue(
                                 "barang_id",
-                                record.key
+                                record.barang_id
                             );
                             pengajuanForm.setFieldValue(
                                 "users_id",

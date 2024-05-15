@@ -27,9 +27,17 @@ class MessageController extends Controller
         ]);
     }
 
-    public function create()
+    public function percakapan($percakapanId)
     {
-        //
+
+
+        $messages = Percakapan::select("messages.*", "users.nama_lengkap as nama_lengkap")
+            ->join('messages', 'percakapan.id', 'messages.percakapan_id')
+            ->join('users', 'users.id', 'messages.user_id')
+            ->where('percakapan.id', $percakapanId)
+            ->get();
+
+        return response()->json($messages);
     }
 
     public function store(Request $request)

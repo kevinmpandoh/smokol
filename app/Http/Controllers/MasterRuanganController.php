@@ -40,11 +40,20 @@ class MasterRuanganController extends Controller
         try {
             $validatedData = $request->validate($request->rules());
 
+            // dd($validatedData);
+
             $response = [
                 'message' => 'Data berhasil ditambahkan',
             ];
 
-            MasterRuangan::create($validatedData);
+            MasterRuangan::create([
+                "nama" => $validatedData["nama"],
+                "users_id" => $request->users_id,
+                "kode_siman" => $request->kode_siman,
+                "kode_baru" => $request->kode_baru,
+                "gedung" => $request->gedung,
+                "lantai" => $request->lantai
+            ]);
             $master_ruangan = MasterRuangan::all();
         } catch (QueryException $e) {
             $response = [

@@ -9,11 +9,19 @@ interface ModalProps {
     permintaanId?: any;
     messages?: any;
     handleSubmitPesan: any;
+    status: string;
 }
 
-const Message = ({ messages, permintaanId, handleSubmitPesan }: ModalProps) => {
+const Message = ({
+    messages,
+    permintaanId,
+    handleSubmitPesan,
+    status,
+}: ModalProps) => {
     const [message, setMessage] = useState("");
     const { auth } = usePage<PageProps>().props;
+
+    console.log(status);
 
     function handleChangeMessage(e: any) {
         setMessage(e.target.value);
@@ -120,42 +128,45 @@ const Message = ({ messages, permintaanId, handleSubmitPesan }: ModalProps) => {
                 <p className="time"> 15h09</p> */}
             </div>
 
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSubmitPesan(message, permintaanId);
-                    setMessage("");
-                }}
-            >
-                <div className="footer-chat">
-                    <input
-                        type="text"
-                        className="write-message"
-                        placeholder="Type your message here"
-                        value={message}
-                        onChange={handleChangeMessage}
-                        name="message"
-                        autoComplete="off"
-                        autoFocus
-                    />
-                    <button
-                        type="submit"
-                        style={{
-                            padding: "12px",
-                            border: "none",
-                            color: "#fff",
-                            backgroundColor: "#04AA6D",
-                            textAlign: "center",
-                            textDecoration: "none",
-                            fontSize: "16px",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Kirim Pesan
-                    </button>
-                </div>
-            </form>
+            {status === "closed" ? null : (
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmitPesan(message, permintaanId);
+                        setMessage("");
+                    }}
+                >
+                    <div className="footer-chat">
+                        <input
+                            type="text"
+                            className="write-message"
+                            placeholder="Type your message here"
+                            value={message}
+                            onChange={handleChangeMessage}
+                            name="message"
+                            autoComplete="off"
+                            autoFocus
+                            disabled={status === "closed"}
+                        />
+                        <button
+                            type="submit"
+                            style={{
+                                padding: "12px",
+                                border: "none",
+                                color: "#fff",
+                                backgroundColor: "#04AA6D",
+                                textAlign: "center",
+                                textDecoration: "none",
+                                fontSize: "16px",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                            }}
+                        >
+                            Kirim Pesan
+                        </button>
+                    </div>
+                </form>
+            )}
         </section>
     );
 };

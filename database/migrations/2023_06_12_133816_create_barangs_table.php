@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ruangan_id');
             $table->foreign('ruangan_id')->references('id')->on('master_ruangan');
 
-            $table->date('record_time');
+            $table->date('record_time')->nullable();
 
             $table->string('kondisi', 12)->default('Baik');
             // $table->string('status_pemeliharaan', 20)->default('Operasional');

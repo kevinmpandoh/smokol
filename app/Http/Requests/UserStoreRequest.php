@@ -29,7 +29,6 @@ class UserStoreRequest extends FormRequest
             'email' => 'required',
             'bidang' => 'nullable',
             'jabatan_id' => 'nullable',
-            'foto' => 'nullable',
             'role' => 'required',
             'username' => 'required',
             'password' => 'required'

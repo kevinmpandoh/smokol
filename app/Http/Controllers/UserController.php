@@ -13,7 +13,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::get();
+        // $users = User::get();
+        // Join tabel jabatan
+        $users = User::join('master_jabatan', 'users.jabatan_id', '=', 'master_jabatan.id')
+            ->select('users.*', 'master_jabatan.nama as jabatan')
+            ->get();
+
+        // dd($users);
         return Inertia::render('Admin/MasterUsers', ['users' => $users]);
     }
     public function update(UserUpdateRequest $request)
@@ -36,11 +42,9 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         try {
-            //code...
+            //code...            
             $validatedReq = $request->validate($request->rules());
             $newUser = [];
-
-            $validatedReq['foto_url'] = $validatedReq['foto'];
             $validatedReq['password'] = Hash::make($validatedReq['password']);
             // $newUser = $item;
 

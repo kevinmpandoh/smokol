@@ -65,6 +65,7 @@ class BarangUserController extends Controller
                 'barang.kondisi',
                 'barang.sistem_operasi_id',
                 'barang.bast_path',
+                'master_barang.id as barang_id',
                 'master_barang.jenis',
                 'master_barang.merk',
                 'master_barang.tipe',
@@ -83,6 +84,7 @@ class BarangUserController extends Controller
             $row['bast_path'] = $row['bast_path'] ? Storage::url($row['bast_path']) : NULL;
             return $row;
         });
+
         return Inertia::render('Barang', ['history_barang' => $data]);
 
         // return Inertia::render('Barang', ['daftar_barang' => DB::table('view_barang_details')->where('id_pengguna', $user->id)->get()]);

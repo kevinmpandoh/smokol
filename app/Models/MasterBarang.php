@@ -11,4 +11,9 @@ class MasterBarang extends Model
     public $timestamps = false;
     protected $table = "master_barang";
     protected $fillable = ["id", "jenis", "merk", "tipe", "tanggal_peroleh", "nomor_seri", "nomor_urut_pendaftaran"];
+
+    public function kelolaBarang()
+    {
+        return $this->hasOne(Barang::class, "barang_id", "id");
+    }
 }

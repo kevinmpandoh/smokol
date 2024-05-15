@@ -9,6 +9,7 @@ import {
     Select,
     Space,
     message,
+    Upload,
 } from "antd";
 import dayjs from "dayjs";
 
@@ -39,6 +40,7 @@ const UserForm: React.FC<{
         { label: "Tim IPDS", value: "Tim IPDS" },
         { label: "Tim BMN", value: "Tim BMN" },
         { label: "Tim PBJ/PPK", value: "Tim PBJ/PPK" },
+        { label: "Admin", value: "admin" },
         { label: "Super Admin", value: "Super Admin" },
     ];
     useEffect(() => {
@@ -77,7 +79,7 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="nama_lengkap"
+                label="Nama Lengkap"
                 name="nama_lengkap"
                 // style={{ display: "none" }}
             >
@@ -85,7 +87,7 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="nip"
+                label="Nip"
                 name="nip"
                 // style={{ display: "none" }}
             >
@@ -93,7 +95,7 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="email"
+                label="Email"
                 name="email"
                 // style={{ display: "none" }}
             >
@@ -113,7 +115,7 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="bidang"
+                label="Bidang"
                 name="bidang"
                 // style={{ display: "none" }}
             >
@@ -121,7 +123,7 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="role"
+                label="Role"
                 name="role"
                 // style={{ display: "none" }}
             >
@@ -129,23 +131,16 @@ const UserForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="username"
+                label="Username"
                 name="username"
                 // style={{ display: "none" }}
             >
                 <Input />
             </Form.Item>
+
             <Form.Item
                 {...formItemLayout}
-                label="foto"
-                name="foto"
-                // style={{ display: "none" }}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                {...formItemLayout}
-                label="password"
+                label="Password"
                 name="password"
                 style={{ display: type == "edit" ? "none" : "" }}
             >

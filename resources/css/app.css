@@ -103,7 +103,7 @@ section .air.air4 {
   
   .chat .messages-chat {
     padding: 25px 35px;
-    height: 76%;
+    height: 70%;
     overflow-y: scroll;    
   }
   

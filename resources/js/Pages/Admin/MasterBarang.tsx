@@ -100,7 +100,7 @@ const MasterBarang = ({
         setConfirmLoadingModal(false);
     };
     const handleOkUbah = async () => {
-        itemAddForm.submit();
+        itemEditForm.submit();
         setOpenModalUbah(false);
         setConfirmLoadingModalUbah(false);
     };
@@ -460,7 +460,7 @@ const MasterBarang = ({
                     style={{ marginBottom: 16 }}
                     icon={<PlusOutlined />}
                 >
-                    Add a row
+                    Tambah Barang
                 </Button>
             </Space>
             <Table

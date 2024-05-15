@@ -33,6 +33,7 @@ class BarangUpdatingListener
             'barang_id' => $barang->id,
             'original_data' => $originalData,
             'modified_data' => $modifiedData,
+            "modified_at" => now(),
             'users_id' => $barang->users_id
         ]);
     }

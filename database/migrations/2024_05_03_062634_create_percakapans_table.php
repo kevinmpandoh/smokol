@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('percakapans', function (Blueprint $table) {
+        Schema::create('percakapan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user1_id');
             $table->unsignedBigInteger('user2_id');
 
             // Foreign Permintaaan
             $table->unsignedBigInteger('permintaan_id');
-            $table->foreign('permintaan_id')->references('id')->on('permintaans')->onDelete('cascade');
+            $table->foreign('permintaan_id')->references('id')->on('permintaan')->onDelete('cascade');
 
             $table->foreign('user1_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user2_id')->references('id')->on('users')->onDelete('cascade');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('percakapans');
+        Schema::dropIfExists('percakapan');
     }
 };

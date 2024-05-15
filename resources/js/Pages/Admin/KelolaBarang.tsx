@@ -111,7 +111,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tanggal_peroleh,
+                    tahun_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -129,7 +129,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tanggal_peroleh,
+                    tahun_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -181,64 +181,56 @@ const BarangPage = ({
     }
     function handleDelete(key: React.Key | string): void {
         if (key === 0) return;
-        router.delete(route("history_barang.destroy", { id: key }), {
-            // method: "delete",
-            preserveState: true,
-            preserveScroll: true,
-            onStart: () =>
-                messageApi.open({
-                    key: saveKey,
-                    content: "Menghapus dari master",
-                    type: "loading",
-                }),
-            onSuccess: (responsePage) => {
-                const response: any = responsePage.props.response;
-                if (response.errors?.length > 1) {
-                    return messageApi.open({
-                        key: saveKey,
-                        content: response.errors,
-                        type: "error",
-                    });
-                }
-                messageApi.open({
-                    key: saveKey,
-                    content: "Berhasil menghapus data",
-                    type: "success",
-                });
-                return 1;
-            },
-            onFinish: () => {},
-
-            onError: (event) => console.log(`Error! ${event}`),
+        messageApi.open({
+            key: saveKey,
+            content: "Sedang menghapus barang pengguna...",
+            type: "loading",
         });
+        try {
+            axios.delete(
+                route("admin.kelola.history_barang.destroy", { id: key })
+            );
+            messageApi.open({
+                key: saveKey,
+                content: "Berhasil menghapus pengguna ",
+                type: "success",
+            });
+            router.get(
+                route("admin.kelola.history_barang.index"),
+                {},
+                { preserveState: true, preserveScroll: true }
+            );
+        } catch (error: any) {
+            messageApi.open({
+                key: saveKey,
+                content: error.message,
+                type: "error",
+            });
+        }
     }
-    const onFinishAdd: (values: any) => any = (values: any) => {
+    const onFinishAdd: (values: any) => any = async (values: any) => {
         messageApi.open({
             key: saveKey,
             content: "Sedang menambahkan data...",
             type: "loading",
         });
         try {
-            router.post(route("barang.store"), values, {
-                onSuccess: (responsePage) => {
-                    const response: any = responsePage.props.response;
-                    console.log({ response });
-                    if (response.errors?.length > 1) {
-                        return messageApi.open({
-                            key: saveKey,
-                            content: response.errors,
-                            type: "error",
-                        });
-                    }
-                    messageApi.open({
-                        key: saveKey,
-                        content: "Berhasil menambahkan data",
-                        type: "success",
-                    });
-
-                    return 1;
-                },
+            const url = route("barang.store");
+            const response = await axios.post(url, values, {
+                headers: { "Content-Type": "application/json" },
             });
+
+            console.log(response, "response");
+            messageApi.open({
+                key: saveKey,
+                content: "Berhasil menambahkan permintaan ",
+                type: "success",
+            });
+            router.get(
+                route("admin.kelola.history_barang.index"),
+                {},
+                { preserveState: true, preserveScroll: true }
+            );
         } catch (error: any) {
             messageApi.open({
                 key: saveKey,
@@ -288,7 +280,7 @@ const BarangPage = ({
     const tipeSorter: Sorter<Barang> = createSorter("tipe");
     const merkSorter: Sorter<Barang> = createSorter("merk");
     const nomorSeriSorter: Sorter<Barang> = createSorter("nomor_seri");
-    const tahunPerolehSorter: Sorter<Barang> = createSorter("tanggal_peroleh");
+    const tahunPerolehSorter: Sorter<Barang> = createSorter("tahun_peroleh");
 
     const defaultColumns: ColumnsType<Barang> = [
         {
@@ -319,8 +311,8 @@ const BarangPage = ({
             sorter: tipeSorter as CompareFn<object>,
         },
         {
-            title: "tanggal_peroleh",
-            dataIndex: "tanggal_peroleh",
+            title: "Tahun peroleh",
+            dataIndex: "tahun_peroleh",
             sorter: tahunPerolehSorter as CompareFn<object>,
         },
         {
@@ -412,8 +404,8 @@ const BarangPage = ({
                             record.ruangan_id
                         );
                         itemEditForm.setFieldValue(
-                            "tanggal_peroleh",
-                            dayjs(record.tanggal_peroleh)
+                            "tahun_peroleh",
+                            dayjs(record.tahun_peroleh)
                         );
                         itemEditForm.setFieldValue(
                             "nomor_urut_pendaftaran",
@@ -462,7 +454,11 @@ const BarangPage = ({
                 cancelText="Batal"
             >
                 <Divider />
-                <HistoryBarangForm form={itemAddForm} onFinish={onFinishAdd} />
+                <BarangForm
+                    form={itemAddForm}
+                    onFinish={onFinishAdd}
+                    type="add"
+                />
             </MyModal>
             <MyModal
                 title={"Kelola Barang"}
@@ -474,7 +470,11 @@ const BarangPage = ({
                 cancelText="Batal"
             >
                 {/* <Divider /> */}
-                <BarangForm form={itemEditForm} onFinish={onFinishEdit} />
+                <BarangForm
+                    form={itemEditForm}
+                    onFinish={onFinishEdit}
+                    type="edit"
+                />
             </MyModal>
 
             {contextHolder}

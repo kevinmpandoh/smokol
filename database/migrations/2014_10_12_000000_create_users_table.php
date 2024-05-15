@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreign('jabatan_id')->references('id')->on('master_jabatan')->onDelete('cascade');
             $table->string('role')->default('basic');
             $table->string('username');
-            $table->string('foto_url');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

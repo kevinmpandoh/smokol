@@ -45,22 +45,25 @@ interface Permintaan {
     deskripsi?: string;
     nama_permintaan: string;
     nama_ruangan?: string;
+    user2_nama?: string;
+    user2_id?: any;
 }
 
 const { Search } = Input;
 
 const Permintaan = ({
     permintaan,
-    messages,
 }: PageProps & { permintaan: Permintaan[] }) => {
     const [searchLoading, setSearchLoading] = useState(false);
     const [itemAddForm] = Form.useForm();
     const [itemEditForm] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
     const [permintaanId, setPermintaanId] = useState(0);
+    const [status, setStatus] = useState("");
     const { auth } = usePage<PageProps>().props;
+    const [messages, setMessages] = useState<any[]>([]);
 
-    console.log(auth.user.role);
+    console.log(messages);
 
     const saveKey = "updatable";
 
@@ -93,6 +96,8 @@ const Permintaan = ({
                     users_nama,
                     nama_ruangan,
                     status,
+                    user2_nama,
+                    user2_id,
                 }) => ({
                     key: id,
                     id,
@@ -107,14 +112,26 @@ const Permintaan = ({
                     nama_ruangan,
                     no_telp,
                     status,
+                    user2_nama,
+                    user2_id,
                 })
             );
-
-            // console.log("changeeeee", { permintaan });
-            console.log("changeeeee", { data_master });
             setDataSource(data_master);
         }, 0);
     }, [permintaan]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(
+                    route("pesan.percakapan", { id: permintaanId })
+                );
+
+                setMessages(data);
+            } catch (error) {}
+        };
+        fetchData();
+    }, [permintaanId]);
 
     const handleAdd = () => {
         itemAddForm.resetFields();
@@ -207,40 +224,67 @@ const Permintaan = ({
     };
 
     const onFinishEdit: (values: any) => any = async (values: any) => {
+        messageApi.open({
+            key: saveKey,
+            content: "Sedang mengubah permintaan...",
+            type: "loading",
+        });
+        // return 0;
+        try {
+            const url = route("permintaan.update");
+            const response = await axios.patch(url, values, {
+                headers: { "Content-Type": "application/json" },
+            });
+            messageApi.open({
+                key: saveKey,
+                content: "Berhasil mengubah permintaan ",
+                type: "success",
+            });
+            router.get(route("permintaan"));
+        } catch (error: any) {
+            messageApi.open({
+                key: saveKey,
+                content: error.message,
+                type: "error",
+            });
+        }
         // messageApi.open({
         //     key: saveKey,
         //     content: "Sedang menyimpan perubahan...",
         //     type: "loading",
         // });
         // try {
-        //     // router.patch(route("users.update"), values, {
-        //     //     onSuccess: (responsePage) => {
-        //     //         const response: any = responsePage.props.response;
-        //     //         console.log({ response });
-        //     //         if (response.errors?.length > 1) {
-        //     //             return messageApi.open({
-        //     //                 key: saveKey,
-        //     //                 content: response.errors,
-        //     //                 type: "error",
-        //     //             });
-        //     //         }
-        //     //         return 1;
-        //     //     },
+        //     router.patch(route("permintaan.update"), values, {
+        //         onSuccess: (responsePage) => {
+        //             const response: any = responsePage.props.response;
+        //             console.log({ response });
+        //             if (response.errors?.length > 1) {
+        //                 return messageApi.open({
+        //                     key: saveKey,
+        //                     content: response.errors,
+        //                     type: "error",
+        //                 });
+        //             }
+        //             return 1;
+        //         },
+        //     });
+
+        //     // router.get(route("permintaan"));
+
+        //     // const url = route("admin.users.update");
+        //     // const response = await axios.patch(url, values, {
+        //     //     headers: { "Content-Type": "application/json" },
         //     // });
-        //     const url = route("admin.users.update");
-        //     const response = await axios.patch(url, values, {
-        //         headers: { "Content-Type": "application/json" },
-        //     });
-        //     messageApi.open({
-        //         key: saveKey,
-        //         content: "Berhasil menyimpan perubahan",
-        //         type: "success",
-        //     });
-        //     router.get(
-        //         route("admin.master.users"),
-        //         {},
-        //         { preserveState: true, preserveScroll: true }
-        //     );
+        //     // messageApi.open({
+        //     //     key: saveKey,
+        //     //     content: "Berhasil menyimpan perubahan",
+        //     //     type: "success",
+        //     // });
+        //     // router.get(
+        //     //     route("admin.master.users"),
+        //     //     {},
+        //     //     { preserveState: true, preserveScroll: true }
+        //     // );
         // } catch (error: any) {
         //     messageApi.open({
         //         key: saveKey,
@@ -293,6 +337,7 @@ const Permintaan = ({
                     onClick={() => {
                         setOpenModalPesan(true);
                         setPermintaanId(record.id ?? 0);
+                        setStatus(record.status);
                     }}
                 >
                     {record.no_ticket}
@@ -307,8 +352,43 @@ const Permintaan = ({
         { title: "Nomor Telepon", dataIndex: "no_telp" },
         { title: "Deskripsi", dataIndex: "deskripsi" },
         { title: "Nama Pembuat", dataIndex: "users_nama" },
-        { title: "Nama Admin", dataIndex: "users_nama" },
-        { title: "Status", dataIndex: "status" },
+        { title: "Nama Admin", dataIndex: "user2_nama" },
+        {
+            title: "Status",
+            render: (_, record) => (
+                <>
+                    {record.status === "open" ? (
+                        <div
+                            style={{
+                                color: "white",
+                                backgroundColor: "green",
+                                padding: "5px 10px",
+                                borderRadius: "5px",
+                                fontSize: "12px",
+                                textAlign: "center",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            Open
+                        </div>
+                    ) : (
+                        <div
+                            style={{
+                                color: "white",
+                                backgroundColor: "red",
+                                padding: "5px 10px",
+                                borderRadius: "5px",
+                                fontSize: "12px",
+                                textAlign: "center",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            Closed
+                        </div>
+                    )}
+                </>
+            ),
+        },
 
         {
             title: "Aksi",
@@ -380,7 +460,6 @@ const Permintaan = ({
                     type="edit"
                 />
             </MyModal>
-
             <MyModal
                 title=""
                 openModal={openModalPesan}
@@ -394,6 +473,7 @@ const Permintaan = ({
                     permintaanId={permintaanId}
                     messages={messages}
                     handleSubmitPesan={submitPesan}
+                    status={status}
                 />
             </MyModal>
             <h1 className="tes">Daftar Permintaan</h1>
@@ -443,7 +523,7 @@ Permintaan.layout = (
     <AuthenticatedLayout
         user={page.props.auth.user}
         header={<h2 className="">Kelola Permintaan</h2>}
-        selectedKey="admin.kelola.permintaan"
+        selectedKey="permintaan"
         children={page}
     ></AuthenticatedLayout>
 );

@@ -17,6 +17,8 @@ const PemeliharaanForm: React.FC<{
         string | ArrayBuffer | null
     >(null);
 
+    console.log(form.getFieldValue());
+
     const handleChange = (info: any) => {
         // console.log({info})
         const { fileList } = info;
