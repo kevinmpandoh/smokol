@@ -276,7 +276,6 @@ class MaintenanceController extends Controller
         $is_user = $request->query('isUser'); // Retrieve the 'id' query parameter
         $user = auth()->user();
 
-
         // Use $type and $id in your query logic
         // Example:
 
@@ -505,6 +504,7 @@ class MaintenanceController extends Controller
         try {
             //code...
             $validatedData = $request->validate($request->rules());
+
             // cek kesamaan dg kode skrg
             $currentSeq = Maintenance::where('sequence_id', $validatedData['sequence_id'])->orderBy('id', 'DESC')->first();
             $currentStatus = $currentSeq->kode_status;

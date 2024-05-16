@@ -349,11 +349,12 @@ const MasterBarang = ({
             title: "tahun_peroleh",
             dataIndex: "tahun_peroleh",
             render: (value: any) =>
-                new Intl.DateTimeFormat("en-GB", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                }).format(new Date(value)),
+                // new Intl.DateTimeFormat("en-GB", {
+                //     day: "numeric",
+                //     month: "short",
+                //     year: "numeric",
+                // }).format(new Date(value)),
+                value,
         },
         {
             title: "Nomor Urut Pendaftaran (NUP)",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
 
@@ -20,29 +20,41 @@ const Message = ({
 }: ModalProps) => {
     const [message, setMessage] = useState("");
     const { auth } = usePage<PageProps>().props;
+    const [dataUser, setDataUser] = useState<any>([]);
 
-    console.log(status);
+    console.log(dataUser, "dataUser");
 
     function handleChangeMessage(e: any) {
         setMessage(e.target.value);
     }
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const response = await axios.get(
+                    `/user-messages/${permintaanId}`
+                );
+
+                setDataUser(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMessages();
+    }, [permintaanId]);
+
     return (
         <section className="chat">
             <div className="header-chat">
                 {/* <i className="icon fa fa-user-o" aria-hidden="true" />
                  */}
-                <img
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                    alt=""
-                    width={50}
-                    height={50}
-                    style={{
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        marginBottom: "10px",
-                    }}
-                />
-                <p className="name">Kevin Pandoh</p>
+
+                <p className="name">
+                    {auth.user.id == dataUser.user1_id
+                        ? `Admin BPS`
+                        : `${dataUser.nama_lengkap_1} (Basic)`}
+                </p>
                 <i
                     className="icon clickable fa fa-ellipsis-h right"
                     aria-hidden="true"
@@ -62,70 +74,12 @@ const Message = ({
                         ) : (
                             <>
                                 <div className="message">
-                                    <div
-                                        className="photo"
-                                        style={{
-                                            backgroundImage:
-                                                "url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)",
-                                        }}
-                                    >
-                                        <div className="online" />
-                                    </div>
                                     <p className="text"> {item.konten} </p>
                                 </div>
-                                <p className="time"> 14h58</p>
                             </>
                         )}
                     </>
                 ))}
-
-                {/* <div className="message">
-                    <div
-                        className="photo"
-                        style={{
-                            backgroundImage:
-                                "url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)",
-                        }}
-                    >
-                        <div className="online" />
-                    </div>
-                    <p className="text"> Hi, how are you ? </p>
-                </div>
-                <div className="message text-only">
-                    <p className="text">
-                        {" "}
-                        What are you doing tonight ? Want to go take a drink ?
-                    </p>
-                </div>
-
-                <p className="time"> 14h58</p>
-                <div className="message text-only">
-                    <div className="response">
-                        <p className="text">
-                            {" "}
-                            Hey Megan ! It's been a while 😃
-                        </p>
-                    </div>
-                </div>
-                <div className="message text-only">
-                    <div className="response">
-                        <p className="text"> When can we meet ?</p>
-                    </div>
-                </div>
-                <p className="response-time time"> 15h04</p>
-                <div className="message">
-                    <div
-                        className="photo"
-                        style={{
-                            backgroundImage:
-                                "url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)",
-                        }}
-                    >
-                        <div className="online" />
-                    </div>
-                    <p className="text"> 9 pm at the bar if possible 😳</p>
-                </div>
-                <p className="time"> 15h09</p> */}
             </div>
 
             {status === "closed" ? null : (

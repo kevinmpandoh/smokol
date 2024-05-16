@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Barang;
 use App\Models\MasterBarang;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 
@@ -16,6 +17,9 @@ class BarangSeeder extends Seeder
     {
         $master_barang = MasterBarang::all();
         $data = [];
+        $users = User::all();
+
+
         foreach ($master_barang as $barang) {
             $data[] = [
                 'barang_id' => $barang['id'],

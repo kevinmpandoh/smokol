@@ -63,8 +63,6 @@ const Permintaan = ({
     const { auth } = usePage<PageProps>().props;
     const [messages, setMessages] = useState<any[]>([]);
 
-    console.log(messages);
-
     const saveKey = "updatable";
 
     // Modal

@@ -71,7 +71,7 @@ class BarangUserController extends Controller
                 'master_barang.tipe',
                 'master_barang.nomor_seri',
                 'master_barang.nomor_urut_pendaftaran',
-                'master_barang.tahun_peroleh',
+                'master_barang.tanggal_peroleh',
                 'users.nama_lengkap',
                 'master_ruangan.nama as ruangan_nama'
             )

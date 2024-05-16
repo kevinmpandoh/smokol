@@ -22,7 +22,7 @@ class PermintaanController extends Controller
 
 
 
-        if ($user->role == 'super admin') {
+        if ($user->role == 'Super Admin') {
             $permintaan = Permintaan::join('users', 'users.id', 'permintaan.user_id')
                 ->join("master_ruangan", "master_ruangan.id", "permintaan.ruangan_id")
                 ->join('percakapan', 'permintaan.id', '=', 'percakapan.permintaan_id')

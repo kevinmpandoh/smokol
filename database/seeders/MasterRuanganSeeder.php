@@ -14,7 +14,7 @@ class MasterRuanganSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['nama' => 'Ruang Umum 2', "users_id" => 3],
+            ['nama' => 'Ruang Umum 2', "users_id" => 32],
             ['nama' => 'Ruang Humas dan RB', "users_id" => 3],
             ['nama' => 'Ruang Pengolahan', "users_id" => 3],
             ['nama' => 'Ruang SKF IPDS', "users_id" => 3],
@@ -52,7 +52,6 @@ class MasterRuanganSeeder extends Seeder
             ['nama' => 'Ruang Statistik Nerwilis', "users_id" => 3],
             ['nama' => 'Ruang Statistik Distribusi', "users_id" => 3],
             ['nama' => 'Ruang Mesin Lift', "users_id" => 3],
-            ['nama' => 'Ruang Umum 2', "users_id" => 3],
         ];
 
         MasterRuangan::insert($data);

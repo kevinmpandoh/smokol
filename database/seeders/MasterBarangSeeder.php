@@ -14,7 +14,7 @@ class MasterBarangSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['id' => '344', 'jenis' => 'PC', 'merk' => 'DELL', 'tipe' => 'Optiplex 3020 Micro', 'tahun_peroleh' => Carbon::now()->setYear('2010')->format('Y-m-d H:i:s'), 'nomor_seri' => '6P72Y42'],
+            ['id' => '344', 'jenis' => 'P.C Unit', 'merk' => 'ASUS', 'tipe' => 'EEETOP2013IUTI-B041C', 'tahun_peroleh' => Carbon::now()->setYear('2010')->format('Y-m-d H:i:s'), 'nomor_seri' => 'E9PTBX003480'],
             ['id' => '345', 'jenis' => 'Printer', 'merk' => 'HP', 'tipe' => 'Laserjet 2055', 'tahun_peroleh' => Carbon::now()->setYear('2010')->format('Y-m-d H:i:s'), 'nomor_seri' => 'CNCJ407425'],
             ['id' => '346', 'jenis' => 'Laptop', 'merk' => 'LENOVO', 'tipe' => 'Thinkpad', 'tahun_peroleh' => Carbon::now()->setYear('2009')->format('Y-m-d H:i:s'), 'nomor_seri' => 'XHWGK'],
             ['id' => '347', 'jenis' => 'Laptop', 'merk' => 'LENOVO', 'tipe' => 'V330-14IKB', 'tahun_peroleh' => Carbon::now()->setYear('2019')->format('Y-m-d H:i:s'), 'nomor_seri' => 'MP1DWLN7'],
@@ -371,6 +371,8 @@ class MasterBarangSeeder extends Seeder
 
 
         ];
+
+
         MasterBarang::insert($data);
     }
 }

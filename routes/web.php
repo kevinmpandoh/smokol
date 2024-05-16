@@ -238,6 +238,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesan', [MessageController::class, 'index'])->name('pesan');
     Route::get('/pesan/{percakapanId}', [MessageController::class, 'percakapan'])->name('pesan.percakapan');
     Route::post('/pesan', [MessageController::class, 'store'])->name('pesan.store');
+
+    Route::get("/user-messages/{percakapanId}", [MessageController::class, 'users']);
 });
 
 require __DIR__ . '/auth.php';

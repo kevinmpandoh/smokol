@@ -20,7 +20,7 @@ return new class extends Migration
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
             $table->integer('sequence_id');
-            $table->string('kode_status', 1)->default(0);
+            $table->string('kode_status', 2)->default(0);
             // $table->foreign('kode_status')->references('kode_status')->on('status_pemeliharaan')->onUpdate('CASCADE');
             $table->unsignedBigInteger('users_id')->default('5');
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('CASCADE')->default('5');

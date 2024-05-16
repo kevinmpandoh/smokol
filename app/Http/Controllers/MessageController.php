@@ -27,15 +27,42 @@ class MessageController extends Controller
         ]);
     }
 
+    public function users($percakapanId)
+    {
+
+        $users = Percakapan::select("percakapan.*", "user1.nama_lengkap as nama_lengkap_1", "user2.nama_lengkap as nama_lengkap_2")
+            ->join('users as user1', 'user1.id', 'percakapan.user1_id')
+            ->join('users as user2', 'user2.id', 'percakapan.user2_id')
+            ->where('percakapan.permintaan_id', $percakapanId)
+            ->first();
+
+
+
+
+
+
+
+        return response()->json($users);
+    }
+
     public function percakapan($percakapanId)
     {
 
 
-        $messages = Percakapan::select("messages.*", "users.nama_lengkap as nama_lengkap")
+        $messages = Percakapan::select("messages.*", "users.nama_lengkap as nama_lengkap", "percakapan.*")
             ->join('messages', 'percakapan.id', 'messages.percakapan_id')
             ->join('users', 'users.id', 'messages.user_id')
+
             ->where('percakapan.id', $percakapanId)
             ->get();
+
+        $users = Percakapan::select("user1.nama_lengkap as nama_lengkap_1", "user2.nama_lengkap as nama_lengkap_2")
+            ->join('users as user1', 'user1.id', 'percakapan.user1_id')
+            ->join('users as user2', 'user2.id', 'percakapan.user2_id')
+            ->where('percakapan.id', $percakapanId)
+            ->get();
+
+        // dd($messages);
 
         return response()->json($messages);
     }
