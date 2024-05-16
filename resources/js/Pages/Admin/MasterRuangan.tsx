@@ -100,16 +100,7 @@ const MasterRuangan = ({
     const handleCancelUbah = () => {
         setOpenModalUbah(false);
     };
-    //end modal
 
-    // const data_master = master_ruangan.map(
-    //     ({ id, nama, users_id, users_nama }): MasterRuangan => ({
-    //         key: id,
-    //         nama,
-    //         users_id,
-    //         users_nama,
-    //     })
-    // );
     const [dataSource, setDataSource] = useState<MasterRuangan[]>([]);
 
     useEffect(() => {
@@ -211,21 +202,6 @@ const MasterRuangan = ({
             type: "loading",
         });
         try {
-            // router.post(route("master_ruangan.store"), values, {
-            //     onSuccess: (responsePage) => {
-            //         const response: any = responsePage.props.response;
-            //         console.log({ response });
-            //         if (response.errors?.length > 1) {
-            //             return messageApi.open({
-            //                 key: saveKey,
-            //                 content: response.errors,
-            //                 type: "error",
-            //             });
-            //         }
-
-            //         return 1;
-            //     },
-            // });
             const url = route("master_ruangan.store");
             const { data } = await axios.post(url, values, {
                 headers: {
@@ -253,25 +229,6 @@ const MasterRuangan = ({
             type: "loading",
         });
         try {
-            // router.patch(route("master_ruangan.update"), values, {
-            //     onSuccess: (responsePage) => {
-            //         const response: any = responsePage.props.response;
-            //         if (response.errors?.length > 1) {
-            //             return messageApi.open({
-            //                 key: saveKey,
-            //                 content: response.errors,
-            //                 type: "error",
-            //             });
-            //         }
-            //         messageApi.open({
-            //             key: saveKey,
-            //             content: "Berhasil menyimpan perubahan data",
-            //             type: "success",
-            //         });
-
-            //         return 1;
-            //     },
-            // });
             const url = route("master_ruangan.update");
             const { data } = await axios.patch(url, values, {
                 headers: {
@@ -338,12 +295,7 @@ const MasterRuangan = ({
             title: "Lantai",
             dataIndex: "lantai",
         },
-        // {
-        //     title: "users_id",
-        //     dataIndex: "users_id",
 
-        //     // sorter: namaSorter as CompareFn<object>,
-        // },
         {
             title: "Nama penanggung jawab ruangan",
             dataIndex: "users_nama",

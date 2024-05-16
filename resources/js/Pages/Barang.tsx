@@ -145,7 +145,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -162,7 +162,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -387,7 +387,7 @@ const BarangPage = ({
     const tipeSorter: Sorter<Barang> = createSorter("tipe");
     const merkSorter: Sorter<Barang> = createSorter("merk");
     const nomorSeriSorter: Sorter<Barang> = createSorter("nomor_seri");
-    const tahunPerolehSorter: Sorter<Barang> = createSorter("tahun_peroleh");
+    const tahunPerolehSorter: Sorter<Barang> = createSorter("tanggal_peroleh");
     interface Column {
         key?: React.Key;
         title: string;
@@ -432,8 +432,8 @@ const BarangPage = ({
             sorter: tipeSorter as CompareFn<object>,
         },
         {
-            title: "tahun_peroleh",
-            dataIndex: "tahun_peroleh",
+            title: "Tanggal peroleh",
+            dataIndex: "tanggal_peroleh",
             sorter: tahunPerolehSorter as CompareFn<object>,
         },
         {
@@ -535,7 +535,7 @@ const BarangPage = ({
                             }
                             pengajuanForm.setFieldValue(
                                 "barang_id",
-                                record.barang_id
+                                record.key
                             );
                             pengajuanForm.setFieldValue(
                                 "users_id",

@@ -22,6 +22,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MaintenanceController extends Controller
 {
@@ -30,7 +31,7 @@ class MaintenanceController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::id();
 
         // dd($user->id);
 
@@ -57,8 +58,12 @@ class MaintenanceController extends Controller
             })
             ->join('master_barang', 'maintenance_sequences.barang_id', '=', 'master_barang.id')
             ->join('status_pemeliharaan', 'status_pemeliharaan.kode_status', '=', 'maintenances.kode_status')
-            ->where('maintenance_sequences.users_id', '=', $user->id)
+            ->where('maintenance_sequences.users_id', '=', $user)
             ->get();
+
+
+        // dd($user);
+        // dd($maintenance_list);
 
 
         // $maintenance_list = DB::table('maintenances')->where('users_id', $user->id);
@@ -94,6 +99,8 @@ class MaintenanceController extends Controller
 
             ->get();
         $maintenance_list = MaintenanceSequence::all();
+
+        // dd($maintenance_list);
         // $maintenance_list = DB::table('maintenances')->where('users_id', $user->id);
         return Inertia::render('Admin/KelolaPengajuan', ['maintenance_list' => ['asu']]);
     }
@@ -276,6 +283,7 @@ class MaintenanceController extends Controller
         $is_user = $request->query('isUser'); // Retrieve the 'id' query parameter
         $user = auth()->user();
 
+
         // Use $type and $id in your query logic
         // Example:
 
@@ -342,6 +350,7 @@ class MaintenanceController extends Controller
                 });
             })
             ->get();
+
         $maintenance_list->transform(function ($item, $key) use ($user) {
             $item['role'] = $user->role;
             $item['problem_img_path'] = Storage::url($item['problem_img_path']);
@@ -349,6 +358,8 @@ class MaintenanceController extends Controller
 
             return $item;
         });
+
+
         return response()->json([
             'data' => $maintenance_list,
         ]);

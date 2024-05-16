@@ -44,6 +44,7 @@ class BarangController extends Controller
                 'master_ruangan.nama as ruangan_nama'
             )
             ->get();
+
         return Inertia::render('Admin/KelolaBarang', ['history_barang' => $data]);
     }
 

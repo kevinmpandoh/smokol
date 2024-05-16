@@ -107,6 +107,7 @@ class MasterRuanganController extends Controller
             $validatedData = $request->validate($request->rules());
 
             $updateRecord = MasterRuangan::findOrFail($request->id);
+            dd(isset($validatedData['gedung']), isset($validatedData['lantai']));
 
             $updateRecord->update(
                 [
@@ -116,8 +117,6 @@ class MasterRuanganController extends Controller
                     'kode_baru' => $validatedData['kode_baru'],
                     'gedung' => isset($validatedData['gedung']) ? $validatedData['gedung'] : '',
                     'lantai' => isset($validatedData['lantai']) ? $validatedData['gedung'] : '',
-                    // 'lantai' => $validatedData['lantai'],
-                    // 'id'=>$validatedData['id'],
                 ]
             );
 

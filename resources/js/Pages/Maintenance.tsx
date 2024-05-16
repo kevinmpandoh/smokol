@@ -156,6 +156,7 @@ const KelolaPengajuanPage = () => {
     // }
     const handleVerticalMenuClick: MenuProps["onClick"] = (e: any) => {
         setSelectedVerticalMenu(e.key);
+        console.log("click ", e);
         fetchDataByType(e.key);
     };
     const renderContent = () => {

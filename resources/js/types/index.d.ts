@@ -53,7 +53,7 @@ export interface Barang {
     jenis: string;
     tipe: string;
     merk: string;
-    tahun_peroleh?: number | string | any;
+    tanggal_peroleh?: number | string | any;
     nomor_seri: string | null;
     nomor_urut_pendaftaran: number;
     kondisi: string;

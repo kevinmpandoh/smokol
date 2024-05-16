@@ -111,7 +111,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -129,7 +129,7 @@ const BarangPage = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     kondisi,
                     ruangan_nama,
@@ -280,7 +280,7 @@ const BarangPage = ({
     const tipeSorter: Sorter<Barang> = createSorter("tipe");
     const merkSorter: Sorter<Barang> = createSorter("merk");
     const nomorSeriSorter: Sorter<Barang> = createSorter("nomor_seri");
-    const tahunPerolehSorter: Sorter<Barang> = createSorter("tahun_peroleh");
+    const tahunPerolehSorter: Sorter<Barang> = createSorter("tanggal_peroleh");
 
     const defaultColumns: ColumnsType<Barang> = [
         {
@@ -312,7 +312,7 @@ const BarangPage = ({
         },
         {
             title: "Tahun peroleh",
-            dataIndex: "tahun_peroleh",
+            dataIndex: "tanggal_peroleh",
             sorter: tahunPerolehSorter as CompareFn<object>,
         },
         {
@@ -405,7 +405,7 @@ const BarangPage = ({
                         );
                         itemEditForm.setFieldValue(
                             "tahun_peroleh",
-                            dayjs(record.tahun_peroleh)
+                            dayjs(record.tanggal_peroleh)
                         );
                         itemEditForm.setFieldValue(
                             "nomor_urut_pendaftaran",
