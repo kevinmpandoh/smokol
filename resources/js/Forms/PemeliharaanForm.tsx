@@ -123,7 +123,7 @@ const PemeliharaanForm: React.FC<{
                 </Form.Item>
                 <Form.Item
                     {...formItemLayout}
-                    label="merk"
+                    label="Merek"
                     name="merk"
                     // style={{ display: "none" }}
                 >
@@ -131,7 +131,7 @@ const PemeliharaanForm: React.FC<{
                 </Form.Item>
                 <Form.Item
                     {...formItemLayout}
-                    label="tipe"
+                    label="Tipe"
                     name="tipe"
                     // style={{ display: "none" }}
                 >

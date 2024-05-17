@@ -270,7 +270,7 @@ const MasterRuangan = ({
 
     const defaultColumns: ColumnsType<MasterRuangan> = [
         {
-            title: "id",
+            title: "Id",
             dataIndex: "key",
 
             // sorter: namaSorter as CompareFn<object>,

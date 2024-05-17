@@ -401,7 +401,7 @@ const BarangPage = ({
 
     const defaultColumns: ColumnsType<Barang> = [
         {
-            title: "jenis",
+            title: "Jenis",
             dataIndex: "jenis",
             filters: [
                 {
@@ -418,7 +418,7 @@ const BarangPage = ({
             sorter: jenisSorter as CompareFn<object>,
         },
         {
-            title: "merk",
+            title: "Merek",
             dataIndex: "merk",
             sorter: merkSorter as CompareFn<object>,
         },
@@ -427,7 +427,7 @@ const BarangPage = ({
             dataIndex: "nama_lengkap",
         },
         {
-            title: "tipe",
+            title: "Tipe",
             dataIndex: "tipe",
             sorter: tipeSorter as CompareFn<object>,
         },
@@ -437,12 +437,12 @@ const BarangPage = ({
             sorter: tahunPerolehSorter as CompareFn<object>,
         },
         {
-            title: "nomor_seri",
+            title: "Nomor Seri",
             dataIndex: "nomor_seri",
             sorter: nomorSeriSorter as CompareFn<object>,
         },
         {
-            title: "kondisi",
+            title: "Kondisi",
             dataIndex: "kondisi",
             filters: [
                 {
@@ -487,7 +487,7 @@ const BarangPage = ({
             },
         },
         {
-            title: "ruangan_nama",
+            title: "Ruangan",
             dataIndex: "ruangan_nama",
         },
         {
@@ -547,7 +547,7 @@ const BarangPage = ({
                             setOpenPengajuan(true);
                         }}
                     >
-                        <MedicineBoxOutlined /> Ajukan Pemeliharaan
+                        <MedicineBoxOutlined /> Ajukan
                     </Button>
                 );
             },
@@ -614,7 +614,7 @@ const BarangPage = ({
             </MyModal>
 
             {contextHolder}
-            <h1>Daftar Barangku</h1>
+            <h1>Daftar Barang Yang Dimiliki</h1>
             <Divider />
             <Space style={{ display: "flex", justifyContent: "space-between" }}>
                 <Search

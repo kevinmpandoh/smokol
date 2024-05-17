@@ -225,7 +225,7 @@ const HistoryBarangForm: React.FC<{
             </Form.Item>
             <Form.Item
                 {...formItemLayout}
-                label="merk"
+                label="Merek"
                 name="merk"
                 style={{ display: type == "add" ? "none" : "" }}
             >

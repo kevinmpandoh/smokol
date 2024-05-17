@@ -181,7 +181,7 @@ const PengajuanCard: React.FC<{
         { users_id, kode_status, sequence_id }: ApproveProps,
         csrfToken: string | null
     ) => {
-        // return users_id + kode_status + sequence_id;
+        return users_id + kode_status + sequence_id;
     };
     const handleView = (
         event: React.MouseEvent<HTMLSpanElement, MouseEvent>,
@@ -192,7 +192,6 @@ const PengajuanCard: React.FC<{
 
         // return users_id + kode_status + sequence_id;
     };
-    console.log({ items });
     return (
         <>
             <Space direction="vertical" style={{ width: "100%" }}>

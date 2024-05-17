@@ -47,7 +47,7 @@ const Dashboard = ({
                     <Card bordered={false}>
                         <Statistic
                             title="Barang TIK Kondisi Baik"
-                            value={kondisi.jumlah}
+                            value={kondisi.baik}
                             valueStyle={{ color: "green" }}
                             prefix={<CheckCircleOutlined />}
                             suffix="Unit"

@@ -51,7 +51,7 @@ interface Item {
     jenis: string;
     merk: string;
     tipe: string;
-    tahun_peroleh: string;
+    tanggal_peroleh: string;
     nomor_seri: string;
 }
 
@@ -60,7 +60,7 @@ interface DataType {
     jenis: string;
     merk: string;
     tipe: string;
-    tahun_peroleh: string;
+    tanggal_peroleh: string;
     nomor_seri: string;
 }
 interface MasterBarang {
@@ -69,7 +69,7 @@ interface MasterBarang {
     jenis: string;
     tipe: string;
     merk: string;
-    tahun_peroleh?: number | string | any;
+    tanggal_peroleh?: number | string | any;
     nomor_seri: string;
     nomor_urut_pendaftaran: string;
 }
@@ -118,7 +118,7 @@ const MasterBarang = ({
             jenis,
             merk,
             tipe,
-            tahun_peroleh,
+            tanggal_peroleh,
             nomor_seri,
             nomor_urut_pendaftaran,
         }): MasterBarang => ({
@@ -126,7 +126,7 @@ const MasterBarang = ({
             jenis,
             merk,
             tipe,
-            tahun_peroleh,
+            tanggal_peroleh,
             nomor_seri,
             nomor_urut_pendaftaran,
         })
@@ -146,7 +146,7 @@ const MasterBarang = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     nomor_urut_pendaftaran,
                 }) => ({
@@ -154,7 +154,7 @@ const MasterBarang = ({
                     jenis,
                     merk,
                     tipe,
-                    tahun_peroleh,
+                    tanggal_peroleh,
                     nomor_seri,
                     nomor_urut_pendaftaran,
                 })
@@ -311,7 +311,7 @@ const MasterBarang = ({
         "nomor_urut_pendaftaran"
     );
     const tahunPerolehSorter: Sorter<MasterBarang> =
-        createSorter("tahun_peroleh");
+        createSorter("tanggal_peroleh");
     interface Column {
         key?: React.Key;
         title: string;
@@ -336,18 +336,18 @@ const MasterBarang = ({
             sorter: jenisSorter as CompareFn<object>,
         },
         {
-            title: "merk",
+            title: "Merek",
             dataIndex: "merk",
             sorter: merkSorter as CompareFn<object>,
         },
         {
-            title: "tipe",
+            title: "Tipe",
             dataIndex: "tipe",
             sorter: tipeSorter as CompareFn<object>,
         },
         {
-            title: "tahun_peroleh",
-            dataIndex: "tahun_peroleh",
+            title: "Tahun Peroleh",
+            dataIndex: "tanggal_peroleh",
             render: (value: any) =>
                 // new Intl.DateTimeFormat("en-GB", {
                 //     day: "numeric",
@@ -362,12 +362,12 @@ const MasterBarang = ({
             sorter: nupSorter as CompareFn<object>,
         },
         {
-            title: "nomor_seri",
+            title: "Nomor Seri",
             dataIndex: "nomor_seri",
             sorter: nomorSeriSorter as CompareFn<object>,
         },
         {
-            title: "edit",
+            title: "Edit",
             render: (_, record) => (
                 <Button
                     onClick={() => {
@@ -379,8 +379,8 @@ const MasterBarang = ({
                         itemEditForm.setFieldValue("merk", record.merk);
                         itemEditForm.setFieldValue("tipe", record.tipe);
                         itemEditForm.setFieldValue(
-                            "tahun_peroleh",
-                            dayjs(record.tahun_peroleh)
+                            "tanggal_peroleh",
+                            dayjs(record.tanggal_peroleh)
                         );
                         itemEditForm.setFieldValue(
                             "nomor_urut_pendaftaran",
@@ -393,12 +393,12 @@ const MasterBarang = ({
                     }}
                 >
                     <EditOutlined />
-                    edit
+                    Edit
                 </Button>
             ),
         },
         {
-            title: "delete",
+            title: "Delete",
             render: (_: any, record: any) => (
                 <Button>
                     <Popconfirm

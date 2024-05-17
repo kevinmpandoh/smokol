@@ -272,13 +272,13 @@ const MasterSistemOperasi = ({
 
     const defaultColumns: ColumnsType<MasterSistemOperasi> = [
         {
-            title: "nama",
+            title: "Nama",
             dataIndex: "nama",
 
             sorter: namaSorter as CompareFn<object>,
         },
         {
-            title: "arsitektur",
+            title: "Arsitektur",
             dataIndex: "arsitektur",
             sorter: arsitekturSorter as CompareFn<object>,
         },

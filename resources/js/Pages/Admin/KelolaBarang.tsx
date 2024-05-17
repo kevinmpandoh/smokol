@@ -284,7 +284,7 @@ const BarangPage = ({
 
     const defaultColumns: ColumnsType<Barang> = [
         {
-            title: "jenis",
+            title: "Jenis",
             dataIndex: "jenis",
             filters: [
                 {
@@ -301,12 +301,12 @@ const BarangPage = ({
             sorter: jenisSorter as CompareFn<object>,
         },
         {
-            title: "merk",
+            title: "Merek",
             dataIndex: "merk",
             sorter: merkSorter as CompareFn<object>,
         },
         {
-            title: "tipe",
+            title: "Tipe",
             dataIndex: "tipe",
             sorter: tipeSorter as CompareFn<object>,
         },
@@ -316,16 +316,16 @@ const BarangPage = ({
             sorter: tahunPerolehSorter as CompareFn<object>,
         },
         {
-            title: "nomor_seri",
+            title: "Nomor Seri",
             dataIndex: "nomor_seri",
             sorter: nomorSeriSorter as CompareFn<object>,
         },
         {
-            title: "nomor_urut_pendaftaran",
+            title: "Nomor Urut Pendaftaran",
             dataIndex: "nomor_urut_pendaftaran",
         },
         {
-            title: "kondisi",
+            title: "Kondisi",
             dataIndex: "kondisi",
             filters: [
                 {
@@ -371,7 +371,7 @@ const BarangPage = ({
             // sorter: nomorSeriSorter as CompareFn<object>,
         },
         {
-            title: "ruangan_nama",
+            title: "Ruangan",
             dataIndex: "ruangan_nama",
             // sorter: nomorSeriSorter as CompareFn<object>,
         },
@@ -381,7 +381,7 @@ const BarangPage = ({
             // sorter: nomorSeriSorter as CompareFn<object>,
         },
         {
-            title: "edit",
+            title: "Edit",
             render: (_, record) => (
                 <Button
                     onClick={() => {
@@ -418,12 +418,12 @@ const BarangPage = ({
                     }}
                 >
                     <EditOutlined />
-                    edit
+                    Edit
                 </Button>
             ),
         },
         {
-            title: "delete",
+            title: "Delete",
             render: (_: any, record: any) => (
                 <Button>
                     <Popconfirm
@@ -445,7 +445,7 @@ const BarangPage = ({
         <Space direction="vertical" style={{ width: "100%" }}>
             <Head title="Daftar Barang Pegawai" />
             <MyModal
-                title={"Tambah History Barang"}
+                title={"Tambah Barang Pegawai"}
                 openModal={openModal}
                 handleOk={handleOk}
                 confirmLoadingModal={confirmLoadingModal}

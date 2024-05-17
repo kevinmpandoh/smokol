@@ -290,25 +290,25 @@ const MasterJabatan = ({
 
     const defaultColumns: ColumnsType<MasterJabatan> = [
         {
-            title: "nama",
+            title: "Nama",
             dataIndex: "nama",
 
             // sorter: namaSorter as CompareFn<object>,
         },
         {
-            title: "tingkat",
+            title: "Tingkat",
             dataIndex: "tingkat",
             // sorter: tingkatSorter as CompareFn<object>,
         },
         {
-            title: "jenis",
+            title: "Jenis",
             dataIndex: "jenis",
 
             // sorter: jenisSorter as CompareFn<object>,
         },
 
         {
-            title: "operation",
+            title: "Aksi",
             dataIndex: "operation",
             render: (_, record: MasterJabatan) => {
                 const items: MenuProps["items"] = [

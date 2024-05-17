@@ -138,16 +138,16 @@ const MasterRuanganForm: React.FC<{
                     optionFilterProp="label"
                 />
             </Form.Item>
-            <Form.Item {...formItemLayout} name="kode_siman" label="kode_siman">
+            <Form.Item {...formItemLayout} name="kode_siman" label="Kode Siman">
                 <InputNumber />
             </Form.Item>
-            <Form.Item {...formItemLayout} name="kode_baru" label="kode_baru">
+            <Form.Item {...formItemLayout} name="kode_baru" label="Kode Baru">
                 <InputNumber />
             </Form.Item>
-            <Form.Item {...formItemLayout} name="gedung" label="gedung">
+            <Form.Item {...formItemLayout} name="gedung" label="Gedung">
                 <InputNumber />
             </Form.Item>
-            <Form.Item {...formItemLayout} name="lantai" label="lantai">
+            <Form.Item {...formItemLayout} name="lantai" label="Lantai">
                 <InputNumber />
             </Form.Item>
         </Form>

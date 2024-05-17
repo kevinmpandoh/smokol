@@ -87,7 +87,7 @@ const PemeriksaanForm: React.FC<{
                 </Form.Item>
                 <Form.Item
                     {...formItemLayout}
-                    label="merk"
+                    label="Merek"
                     name="merk"
                     // style={{ display: "none" }}
                 >
